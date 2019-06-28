@@ -2,7 +2,6 @@ package info.batey
 
 import info.batey.UserRegistry.ActionPerformed
 
-//#json-support
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import spray.json.DefaultJsonProtocol
 
@@ -15,4 +14,3 @@ trait JsonSupport extends SprayJsonSupport {
 
   implicit val actionPerformedJsonFormat = jsonFormat1(ActionPerformed)
 }
-//#json-support

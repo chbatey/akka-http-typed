@@ -1,14 +1,10 @@
 package info.batey
 
-//#user-registry-actor
 import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ ActorRef, Behavior }
-import akka.actor.{ Actor, ActorLogging, Props }
 
-//#user-case-classes
 final case class User(name: String, age: Int, countryOfResidence: String)
 final case class Users(users: Seq[User])
-//#user-case-classes
 
 object UserRegistry {
 
@@ -32,6 +28,7 @@ object UserRegistry {
       Behaviors.same
     case DeleteUser(name, replyTo) =>
       UserRegistry(users.filterNot(_.name == name))
+      replyTo.tell(ActionPerformed(s"User $name deleted."))
       Behaviors.same
   }
 
