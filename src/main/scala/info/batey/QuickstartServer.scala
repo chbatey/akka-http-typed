@@ -11,17 +11,15 @@ import akka.stream.ActorMaterializer
 import scala.concurrent.Future
 import scala.util.{ Failure, Success }
 
-//#main-class
 object QuickstartServer extends App {
 
-  // set up ActorSystem and other dependencies here
-  //#main-class
-  //#server-bootstrapping
   val system = ActorSystem[Nothing](Behaviors.setup[Nothing] { ctx =>
+    // http doesn't know about akka typed so create untyped system/materializer
     implicit val untypedSystem: actor.ActorSystem = ctx.system.toUntyped
     implicit val materializer: ActorMaterializer = ActorMaterializer()(ctx.system.toUntyped)
     implicit val ec = ctx.system.executionContext
 
+    // didn't convert this yet
     val userRoutesRef = ctx.actorOf(UserRegistryActor.props, "userRegistryActor")
 
     val routes = new UserRoutes(untypedSystem, userRoutesRef)
