@@ -20,9 +20,9 @@ object QuickstartServer extends App {
     implicit val ec = ctx.system.executionContext
 
     // didn't convert this yet
-    val userRoutesRef = ctx.actorOf(UserRegistryActor.props, "userRegistryActor")
+    val userRoutesRef = ctx.spawn(UserRegistry(), "userRegistryActor")
 
-    val routes = new UserRoutes(untypedSystem, userRoutesRef)
+    val routes = new UserRoutes(ctx.system, userRoutesRef)
 
     val serverBinding: Future[Http.ServerBinding] = Http()(ctx.system.toUntyped).bindAndHandle(routes.userRoutes, "localhost", 8080)
     serverBinding.onComplete {

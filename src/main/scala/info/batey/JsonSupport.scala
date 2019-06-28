@@ -1,6 +1,6 @@
 package info.batey
 
-import info.batey.UserRegistryActor.ActionPerformed
+import info.batey.UserRegistry.ActionPerformed
 
 //#json-support
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
